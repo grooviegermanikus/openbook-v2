@@ -34,6 +34,8 @@ pub struct FillLog {
 
 #[event]
 pub struct MarketMetaDataLog {
+    // TODO: isn't all this data anyways in the instruction?
+    // could be an empty log event just to mark the transaction itself
     pub market: Pubkey,
     pub name: String,
     pub base_mint: Pubkey,
@@ -59,12 +61,14 @@ pub struct CancelOrderLog {
     pub slot: u8,
     pub side: u8,
     pub quantity: i64,
+    // TODO: not sure it's needed
 }
 
 #[event]
 pub struct CancelOrdersLog {
     pub open_orders_account: Pubkey,
     pub total_quantity: i64,
+    // TODO: not sure it's needed
 }
 
 #[event]
@@ -73,6 +77,7 @@ pub struct CancelAllOrdersLog {
     pub side: Option<u8>,
     pub quantity: i64,
     pub limit: u8,
+    // TODO: not sure it's needed
 }
 
 #[event]

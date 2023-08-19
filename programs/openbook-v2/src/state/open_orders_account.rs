@@ -9,6 +9,7 @@ use crate::pubkey_option::NonZeroPubkeyOption;
 
 use super::{BookSideOrderTree, FillEvent, LeafNode, Market, Side, SideAndOrderTree};
 
+// TODO: 32 or 64 is enough
 pub const MAX_OPEN_ORDERS: usize = 128;
 
 #[account(zero_copy)]

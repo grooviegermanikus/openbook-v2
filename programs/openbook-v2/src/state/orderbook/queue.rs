@@ -9,6 +9,8 @@ use super::Side;
 pub const MAX_NUM_EVENTS: u16 = 600;
 pub const NO_NODE: u16 = u16::MAX;
 
+// TODO: rename queue -> buffer
+
 /// Container for the different EventTypes.
 ///
 /// Events are stored in a fixed-array of nodes. Free nodes are connected by a single-linked list

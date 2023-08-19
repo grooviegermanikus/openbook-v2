@@ -4,6 +4,7 @@ use std::mem::size_of;
 
 #[account(zero_copy)]
 #[derive(Debug)]
+// TODO: this should allow to derive all OOpks owned by a user, saving the PDA seeds should be enough
 pub struct OpenOrdersIndexer {
     pub owner: Pubkey,
     pub market: Pubkey,

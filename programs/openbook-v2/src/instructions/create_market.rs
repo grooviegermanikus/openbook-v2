@@ -19,6 +19,7 @@ pub fn create_market(
     taker_fee: i64,
     time_expiry: i64,
 ) -> Result<()> {
+    // TODO: why convert to u64? would save some cycles
     let now_ts: u64 = Clock::get()?.unix_timestamp.try_into().unwrap();
 
     require!(
@@ -33,6 +34,8 @@ pub fn create_market(
         taker_fee >= 0 && (maker_fee >= 0 || maker_fee.abs() <= taker_fee),
         OpenBookError::InvalidInputMarketFees
     );
+
+    // TODO: should have maker fee check, make sure it doesnt lead to extreme rounding
 
     require!(
         time_expiry == 0 || time_expiry > Clock::get()?.unix_timestamp,

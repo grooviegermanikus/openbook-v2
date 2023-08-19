@@ -33,6 +33,7 @@ mod consume_events;
 mod create_market;
 mod create_open_orders_account;
 mod create_open_orders_indexer;
+// edit orders is missing
 mod deposit;
 mod place_order;
 mod place_take_order;

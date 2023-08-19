@@ -118,6 +118,7 @@ impl<'a> Orderbook<'a> {
         let mut referrer_amount = 0_u64;
         let mut maker_rebates_acc = 0_u64;
 
+        // TODO should be pre-allocated with a size based on limits to avoid resizing
         let mut matched_order_changes: Vec<(BookSideOrderHandle, i64)> = vec![];
         let mut matched_order_deletes: Vec<(BookSideOrderTree, u128)> = vec![];
         let mut number_of_dropped_expired_orders = 0;
@@ -596,6 +597,9 @@ pub fn process_fill_event(
     }
 
     if !is_processed {
+        // TODO: charge extra lamport fee from signer of tx to incentivise remaining acc usage
+        //       market owner is responsible for cranking and can claim those later
+        //       this disincentivizes 3rd party crank spam
         event_queue.push_back(cast(event));
     }
 

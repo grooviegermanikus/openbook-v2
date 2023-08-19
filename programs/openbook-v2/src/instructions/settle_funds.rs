@@ -9,6 +9,7 @@ pub fn settle_funds<'info>(ctx: Context<'_, '_, '_, 'info, SettleFunds<'info>>) 
     let mut open_orders_account = ctx.accounts.open_orders_account.load_mut()?;
     let mut market = ctx.accounts.market.load_mut()?;
 
+    // TODO: what is this?
     let mut roundoff_maker_fees = 0;
 
     if market.maker_fee.is_positive() && open_orders_account.position.bids_base_lots == 0 {

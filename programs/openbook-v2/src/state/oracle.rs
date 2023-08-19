@@ -39,6 +39,8 @@ const DECIMAL_CONSTANTS: [I80F48; 25] = [
     I80F48::from_bits((1 << 48) * 10i128.pow(11u32)),
     I80F48::from_bits((1 << 48) * 10i128.pow(12u32)),
 ];
+
+// TODO add static assert / test for power_of_ten(0) == 1
 pub const fn power_of_ten(decimals: i8) -> I80F48 {
     DECIMAL_CONSTANTS[(decimals + DECIMAL_CONSTANT_ZERO_INDEX) as usize]
 }
@@ -138,6 +140,7 @@ pub fn oracle_price_data(
     let oracle_type = determine_oracle_type(acc_info)?;
 
     Ok(match oracle_type {
+        // add a loop to burn cycles here for the sake of proper CU in testing/simulation
         OracleType::Stub => (acc_info.load::<StubOracle>()?.price, fixed::FixedI128::ZERO),
         OracleType::Pyth => {
             let price_account = pyth_sdk_solana::state::load_price_account(data).unwrap();
@@ -231,6 +234,7 @@ pub fn oracle_price_data(
             let price = I80F48::from_num(result.result.result);
 
             // Filter out bad prices
+            // TODO: why is this necessary?
             let min_response = I80F48::from_num(result.result.min_response);
             let max_response = I80F48::from_num(result.result.max_response);
             if (max_response - min_response) > (config.conf_filter * price) {
@@ -249,6 +253,7 @@ pub fn oracle_price_data(
                 && round_open_slot.saturating_add(config.max_staleness_slots as u64)
                     < staleness_slot
             {
+                // TODO: should still allow trading but only on non-oracle pegged book
                 msg!(
                     "Switchboard v1 price too stale; pubkey {} price: {} round_open_slot: {}",
                     acc_info.key(),
@@ -264,6 +269,7 @@ pub fn oracle_price_data(
         OracleType::RaydiumCLMM => {
             let pool = bytemuck::from_bytes::<PoolState>(&data[8..]);
 
+            // TODO: can save some cycles here: square in x64 and convert to i128 in the end
             let sqrt_price = I80F48::checked_from_num(pool.sqrt_price_x64).unwrap()
                 >> raydium_amm_v3::libraries::RESOLUTION;
 

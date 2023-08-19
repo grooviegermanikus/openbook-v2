@@ -685,3 +685,7 @@ async fn test_locked_amounts() -> Result<(), TransportError> {
 
     Ok(())
 }
+
+
+// TODO: should test how this behaves with outdated oracles
+// TODO: should test how this behaves with a crossed book after oracle moved, can you send an atomic arb? ioc buy & sell
