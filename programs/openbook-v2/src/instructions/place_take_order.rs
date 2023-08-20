@@ -85,7 +85,6 @@ pub fn place_take_order<'info>(
         }
     };
 
-    // why should there be no referrer?
     if ctx.accounts.referrer_account.is_some() {
         market.fees_to_referrers += referrer_amount;
         market.quote_deposit_total -= referrer_amount;

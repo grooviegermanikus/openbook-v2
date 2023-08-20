@@ -31,6 +31,12 @@ available under GPL.
 | v0.1 | devnet  | opnbkNkqux64GppQhwbyEVc3axhssFhVYuwar8rDHCu |
 | v0.1 | testnet | opnbkNkqux64GppQhwbyEVc3axhssFhVYuwar8rDHCu |
 
+
+## Creating markets
+
+TODO: explain choice of lot sizes
+TODO: explain maker / taker fee rounding
+
 ## Building & testing
 
 ### Pre-requisites

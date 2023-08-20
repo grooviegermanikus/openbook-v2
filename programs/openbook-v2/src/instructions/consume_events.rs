@@ -58,7 +58,6 @@ pub fn consume_events(
     let remaining_accs = &ctx.remaining_accounts;
 
     let slots_to_consume: Vec<usize> = match slots {
-        // TODO: should concat and fill up to limit from both
         Some(slots) => slots
             .into_iter()
             .filter(|slot| !event_queue.nodes[*slot].is_free())
@@ -77,7 +76,8 @@ pub fn consume_events(
             None => continue,
         };
 
-        // TODO: don't error out, just continue
+        // NOTE: an open orders account missing from remaining_accs does not trigger this error
+        //       it's only triggered if the event can not be deserialized
         match EventType::try_from(event.event_type).map_err(|_| error!(OpenBookError::SomeError))? {
             EventType::Fill => {
                 let fill: &FillEvent = cast_ref(event);

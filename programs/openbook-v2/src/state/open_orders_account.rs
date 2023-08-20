@@ -290,6 +290,7 @@ pub struct Position {
     pub base_free_native: u64,
     pub quote_free_native: u64,
 
+    // TODO: explain how this is used
     pub locked_maker_fees: u64,
     pub referrer_rebates_available: u64,
 
